@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             // Carregar a imagem a partir de um arquivo
-            File file = new File("../imagem.png");
+            File file = new File("imagem.png");
             BufferedImage image = ImageIO.read(file);
 
             // Obter a cor do pixel na posição (x, y)
