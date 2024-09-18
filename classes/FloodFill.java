@@ -5,27 +5,79 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class FloodFill {
     private File file;
     private BufferedImage image;
     private Fila<Integer> filaPixeis;
-    
-    public FloodFill (String imagePath) throws IOException{
+    private int imageHeight;
+    private int imageWidth;
+
+    public FloodFill (String imagePath) throws IOException {
         this.file = new File(imagePath);
         this.image = ImageIO.read(file);
+        this.imageHeight = image.getHeight();
+        this.imageWidth = image.getWidth();
+        this.filaPixeis = new Fila<>(imageWidth * imageHeight);
     }
 
-    public void pixelAlvo(int x, int y) {
-        if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight()) {
-            int rgb = image.getRGB(x, y);
-            Color color = new Color(rgb);
-        } else {
-            throw new IllegalArgumentException("Pixel inválido");
+    public void fillImage (int x, int y, Color cor) {
+        Color corPixel = getCorPixel(x, y);
+
+        percorrerTodos(corPixel, x, y);
+
+        for (int i = 0; i < filaPixeis.getTop(); i += 2) {
+            int xFila = filaPixeis.rm();
+            int yFila = filaPixeis.rm();
+            image.setRGB(xFila, yFila, cor.getRGB());
         }
+
+        mostrarImagem();
     }
 
-    public void percorrerTodos() {
+    private Color getCorPixel(int x, int y) {
+        if (x >= 0 && x < imageWidth && y >= 0 && y < imageHeight)
+            return new Color(image.getRGB(x, y));
         
+        throw new IllegalArgumentException("Pixel fora da imagem");
     }
-}
+
+    private void percorrerTodos(Color cor, int x, int y) {
+        if (x < 1 || x >= imageWidth || y < 1 || y >= imageHeight)
+            return;
+    
+        if (!getCorPixel(x, y).equals(cor))
+            return;
+    
+        filaPixeis.add(x);
+        filaPixeis.add(y);
+
+        
+        if (x + 1 < imageWidth)
+            percorrerTodos(cor, x + 1, y);
+        if (y + 1 < imageHeight)
+            percorrerTodos(cor, x, y + 1);
+        if (x - 1 > 0)
+            percorrerTodos(cor, x - 1, y);
+        if (y - 1 > 0)
+            percorrerTodos(cor, x, y - 1);
+            
+            
+    }
+
+    private void mostrarImagem() {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Imagem Pintada");
+
+        ImageIcon imageIcon = new ImageIcon(image);
+        JLabel jLabel = new JLabel(imageIcon);
+
+        frame.getContentPane().add(jLabel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}   

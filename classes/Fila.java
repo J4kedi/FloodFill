@@ -32,7 +32,7 @@ public class Fila<T> {
     public void add(T n) {
         if (!isFull()) {
             data[top] = n;
-            System.out.println("Adicionado: " + data[top]);
+            // System.out.println("Adicionado: " + data[top]);
             top = move(top);
         } else {
             throw new IllegalArgumentException("Fila cheia!");
