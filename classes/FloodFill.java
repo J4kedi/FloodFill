@@ -15,6 +15,9 @@ public class FloodFill {
     private Fila<Integer> filaPixeis;
     private int imageHeight;
     private int imageWidth;
+    private int prevCell;
+    private int nextCell;
+
 
     public FloodFill (String imagePath) throws IOException {
         this.file = new File(imagePath);
@@ -22,6 +25,8 @@ public class FloodFill {
         this.imageHeight = image.getHeight();
         this.imageWidth = image.getWidth();
         this.filaPixeis = new Fila<>(imageWidth * imageHeight);
+        this.prevCell = 0;
+        this.nextCell = 0;
     }
 
     public void fillImage (int x, int y, Color cor) {
@@ -51,21 +56,28 @@ public class FloodFill {
     
         if (!getCorPixel(x, y).equals(cor))
             return;
-    
+
         filaPixeis.add(x);
         filaPixeis.add(y);
-
         
-        if (x + 1 < imageWidth)
-            percorrerTodos(cor, x + 1, y);
-        if (y + 1 < imageHeight)
+        
+
+        if (y + 1 < imageHeight && (y + 1) != nextCell && x + 1 != prevCell) {
+            nextCell = y;
             percorrerTodos(cor, x, y + 1);
-        if (x - 1 > 0)
-            percorrerTodos(cor, x - 1, y);
-        if (y - 1 > 0)
+        }
+        if (x + 1 < imageWidth && (x + 1) != prevCell && y + 1 != nextCell) {
+            prevCell = x;
+            percorrerTodos(cor, x + 1, y);
+        }
+        if (y - 1 > 0 && (y - 1) != nextCell && x - 1 != prevCell) {
+            nextCell = y;
             percorrerTodos(cor, x, y - 1);
-            
-            
+        }
+        if (x - 1 > 0 && (x - 1) != prevCell && y - 1 != nextCell) {
+            prevCell = x;
+            percorrerTodos(cor, x - 1, y);
+        }
     }
 
     private void mostrarImagem() {
