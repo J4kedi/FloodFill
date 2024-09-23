@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.io.IOException;
-import classes.FloodFill;
+
+import floodFillFila.FloodFill;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +10,7 @@ public class Main {
         try {
             FloodFill floodFill = new FloodFill("imagem.png");
 
-            floodFill.fillImage(359, 55, vermelho);
+            floodFill.fillImage(120, 40, vermelho);
         } catch (IOException e) {
             System.err.println("Erro ao carregar a imagem: " + e.getMessage());
         }

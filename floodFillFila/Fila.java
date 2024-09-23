@@ -1,4 +1,4 @@
-package classes;
+package floodFillFila;
 
 import java.util.Arrays;
 
@@ -30,22 +30,37 @@ public class Fila<T> {
     }
 
     public void add(T n) {
-        if (!isFull()) {
-            data[top] = n;
-            // System.out.println("Adicionado: " + data[top]);
-            top = move(top);
-        } else {
+        if (isFull())
             throw new IllegalArgumentException("Fila cheia!");
-        }
+        data[top] = n;
+        System.out.println("Adicionado: " + data[top]);
+        top = move(top);
     }
 
     public T rm() {
-        if (data[base] == null) {
-            throw new IllegalArgumentException("Fila vazia!");
-        }
+        if (isEmpty())
+            throw new IllegalArgumentException("Fila vazia");
         T v = data[base];
         System.out.println("Removido: " + data[base]);
         data[base] = null;
+        if (top == 1) {
+            base = 0;
+            top = 0;
+        }
+        base = move(base);
+        return v;
+    }
+
+    public T poll () {
+        if (isEmpty())
+            return null;
+        T v = data[base];
+        System.out.println("Removido: " + data[base]);
+        data[base] = null;
+        if (top == 1) {
+            base = 0;
+            top = 0;
+        }
         base = move(base);
         return v;
     }
