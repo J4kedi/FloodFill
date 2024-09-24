@@ -41,9 +41,8 @@ public class FloodFill {
 
         image.setRGB(x, y, novaCor.getRGB());
 
-        if (corInicial.equals(novaCor)) {
+        if (corInicial.equals(novaCor))
             return;
-        }
 
         while (!fila.isEmpty()) {
             int[] pos = fila.poll();

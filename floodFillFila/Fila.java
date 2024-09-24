@@ -12,19 +12,9 @@ public class Fila<T> {
         this.data = (T[]) new Object[size];
     }
 
-    public int getBase() {
-        return base;
-    }
-
-    public int getTop() {
-        return top;
-    }
-
     public void clear() {
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.length; i++)
             data[i] = null;
-        }
-
         top = 0;
         base = 0;
     }
@@ -33,7 +23,6 @@ public class Fila<T> {
         if (isFull())
             throw new IllegalArgumentException("Fila cheia!");
         data[top] = n;
-        System.out.println("Adicionado: " + data[top]);
         top = move(top);
     }
 
@@ -41,13 +30,12 @@ public class Fila<T> {
         if (isEmpty())
             throw new IllegalArgumentException("Fila vazia");
         T v = data[base];
-        System.out.println("Removido: " + data[base]);
         data[base] = null;
+        base = move(base);
         if (top == 1) {
             base = 0;
             top = 0;
         }
-        base = move(base);
         return v;
     }
 
@@ -57,11 +45,11 @@ public class Fila<T> {
         T v = data[base];
         System.out.println("Removido: " + data[base]);
         data[base] = null;
+        base = move(base);
         if (top == 1) {
             base = 0;
             top = 0;
         }
-        base = move(base);
         return v;
     }
 
