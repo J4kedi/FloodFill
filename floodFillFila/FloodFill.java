@@ -2,30 +2,22 @@ package floodFillFila;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import utils.Imagem;
 
 public class FloodFill {
-    private File file;
     private BufferedImage image;
     private int imageHeight;
     private int imageWidth;
 
-    public FloodFill(String imagePath) throws IOException {
-        this.file = new File(imagePath);
-        this.image = ImageIO.read(file);
+    public FloodFill(Imagem imagem) {
+        this.image = imagem.getImage();
         this.imageHeight = image.getHeight();
         this.imageWidth = image.getWidth();
     }
 
     public void fillImage(int x, int y, Color novaCor) {
         Color corPixelInicial = getCorPixel(x, y);
-        floodFill(x, y, corPixelInicial, novaCor);
-        mostrarImagem();
+        pintar(x, y, corPixelInicial, novaCor);
     }
 
     private Color getCorPixel(int x, int y) {
@@ -35,7 +27,7 @@ public class FloodFill {
         throw new IllegalArgumentException("Pixel fora da imagem");
     }
 
-    private void floodFill(int x, int y, Color corInicial, Color novaCor) {
+    private void pintar(int x, int y, Color corInicial, Color novaCor) {
         Fila<int[]> fila = new Fila<>(imageHeight * imageWidth);
         fila.add(new int[]{x, y});
 
@@ -70,18 +62,5 @@ public class FloodFill {
                 fila.add(new int[]{px, py - 1});
             }
         }
-    }
-
-    private void mostrarImagem() {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Imagem Pintada");
-
-        ImageIcon imageIcon = new ImageIcon(image);
-        JLabel jLabel = new JLabel(imageIcon);
-
-        frame.getContentPane().add(jLabel);
-        frame.pack();
-        frame.setVisible(true);
     }
 }
