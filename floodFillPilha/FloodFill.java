@@ -24,7 +24,7 @@ public class FloodFill {
 
     public void fillImage(int x, int y, Color novaCor) {
         Color corPixelInicial = getCorPixel(x, y);
-        floodFill(x, y, corPixelInicial, novaCor);
+        pintar(x, y, corPixelInicial, novaCor);
         mostrarImagem();
     }
 
@@ -35,7 +35,7 @@ public class FloodFill {
         throw new IllegalArgumentException("Pixel fora da imagem");
     }
 
-    private void floodFill(int x, int y, Color corInicial, Color novaCor) {
+    private void pintar(int x, int y, Color corInicial, Color novaCor) {
         Pilha<int[]> pilha = new Pilha<>(imageHeight * imageWidth);
         pilha.push(new int[]{x, y});
 

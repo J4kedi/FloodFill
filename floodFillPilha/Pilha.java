@@ -10,7 +10,7 @@ public class Pilha<T> {
     }
 
     public void push(T data) {
-        this.data[top++] = data;
+        this.data[++top] = data;
     }
 
     public T pop() {
