@@ -15,7 +15,7 @@ public class Main {
             FloodFill floodFillFila = new FloodFill(imagemFila);
             FloodFillPilha floodFillPilha = new FloodFillPilha(imagemPilha);
             
-            floodFillFila.fillImage(120, 40, vermelho);
+            floodFillFila.fillImage(120, 70, vermelho);
             imagemFila.mostrarImagem();
 
             floodFillPilha.fillImage(120, 40, vermelho);
